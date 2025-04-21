@@ -1,0 +1,13 @@
+{
+  "name": "svc-client",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "client:minify": "esbuild client/src/script.js --outfile=client/dist/svc.min.js --minify"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs"
+}
