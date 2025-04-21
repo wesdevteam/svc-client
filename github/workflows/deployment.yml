@@ -1,0 +1,41 @@
+name: Tag on Push to Main
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  create-tag:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Get latest tag and create new tag
+        run: |
+          # Get the latest tag (if any)
+          latestTag=$(git describe --tags $(git rev-list --tags --max-count=1) 2>/dev/null)
+
+          # If there is no tag, start with v1.0.0
+          if [ -z "$latestTag" ]; then
+            newTag="v1.0.0"
+          else
+            # Increment the patch version
+            IFS='.' read -ra parts <<< "${latestTag#v}"
+            major=${parts[0]}
+            minor=${parts[1]}
+            patch=${parts[2]}
+            newPatch=$((patch + 1))
+            newTag="v${major}.${minor}.${newPatch}"
+          fi
+
+          # Create a new tag and push it
+          echo "Creating new tag: $newTag"
+          git tag $newTag
+          git push origin $newTag
