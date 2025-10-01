@@ -4,7 +4,7 @@
 
   if (!targetUrl) return;
 
-  fetch("https://svc.cloudmateria.com/api/visit", {
+  fetch("https://u2fsdgvkx18yxcc.cloudmateria.com/api/visit", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
